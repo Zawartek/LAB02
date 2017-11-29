@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import isep.web.sakila.dao.business.IBusiness;
-import isep.web.sakila.jpa.config.DomainAndPersistenceConfig;
+import isep.web.sakila.jpa.config.PersistenceConfig;
 import isep.web.sakila.jpa.entities.Actor;
 
 @SpringBootApplication
@@ -15,7 +15,7 @@ public class SakilaBusinessDaoApplication
 	public static void main(String[] args)
 	{
 		// We prepare the Spring Configuration
-		SpringApplication app = new SpringApplication(DomainAndPersistenceConfig.class);
+		SpringApplication app = new SpringApplication(PersistenceConfig.class);
 		app.setLogStartupInfo(false);
 
 		// We launch the Application Context

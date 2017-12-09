@@ -3,7 +3,8 @@ App.controller('CustomerController', ['$scope', 'CustomerService', function ($sc
         var self = this;
         self.customer = {
             customerId: null,
-            store_id: null,
+            storeId: null,
+            addressId: null,
             lastName: '',
             firstName: '',
             email: '',
@@ -68,7 +69,8 @@ App.controller('CustomerController', ['$scope', 'CustomerService', function ($sc
         self.reset = function () {
             self.customer = {
                 customerId: null,
-                store_id: null,
+                storeId: null,
+                addressId: null,
                 lastName: '',
                 firstName: '',
                 email: '',

@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import isep.web.sakila.webapi.model.AddressWO;
 import isep.web.sakila.webapi.model.CustomerWO;
+import isep.web.sakila.webapi.service.AddressService;
 import isep.web.sakila.webapi.service.CustomerService;
 
 @RestController
@@ -25,7 +27,10 @@ public class CustomerRestController
 
 	@Autowired
 	CustomerService	customerService;
-
+	
+	@Autowired
+	AddressService addressService;
+	
 	private static final Log	log	= LogFactory.getLog(CustomerRestController.class);
 
 	@RequestMapping(value = "/customer/", method = RequestMethod.GET)
@@ -71,17 +76,23 @@ public class CustomerRestController
 	{
 		log.error(String.format("Updating customer %s ", customerWO.getCustomerId()));
 		CustomerWO currentCustomer = customerService.findById(customerWO.getCustomerId());
+		AddressWO currentAddress = addressService.findById(customerWO.getAddress().getAddressId());
 
 		if (currentCustomer == null)
 		{
 			System.out.println("Customer with id " + customerWO.getCustomerId() + " not found");
 			return new ResponseEntity<CustomerWO>(HttpStatus.NOT_FOUND);
 		}
-
+		
+		currentAddress.setAddress(customerWO.getAddress().getAddress());
+		currentAddress.setAddress2(customerWO.getAddress().getAddress2());
+		currentAddress.setCity(customerWO.getAddress().getCity());
+		addressService.updateAddress(currentAddress);
+		
 		currentCustomer.setLastName(customerWO.getLastName());
 		currentCustomer.setFirstName(customerWO.getFirstName());
 		currentCustomer.setEmail(customerWO.getEmail());
-		currentCustomer.setAddress(customerWO.getAddress());
+		currentCustomer.setAddress(currentAddress);
 		//currentCustomer.setStore(customerWO.getStore());
 
 		customerService.updateCustomer(currentCustomer);

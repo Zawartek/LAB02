@@ -7,11 +7,15 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import isep.web.sakila.dao.repositories.CustomerRepository;
 import isep.web.sakila.jpa.entities.Customer;
 import isep.web.sakila.webapi.model.CustomerWO;
 
+@Service("customerService")
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;

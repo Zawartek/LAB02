@@ -29,7 +29,7 @@ public class CustomerRestController
 	private static final Log	log	= LogFactory.getLog(CustomerRestController.class);
 
 	@RequestMapping(value = "/customer/", method = RequestMethod.GET)
-	public ResponseEntity<List<CustomerWO>> listAllCustomerq()
+	public ResponseEntity<List<CustomerWO>> listAllCustomers()
 	{
 		List<CustomerWO> customers = customerService.findAllCustomers();
 		if (customers.isEmpty())
@@ -39,42 +39,42 @@ public class CustomerRestController
 		return new ResponseEntity<List<CustomerWO>>(customers, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/actor/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CustomerWO> getActor(@PathVariable("id") int id)
+	@RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CustomerWO> getCustomer(@PathVariable("id") int id)
 	{
-		System.out.println("Fetching Actor with id " + id);
+		System.out.println("Fetching Customer with id " + id);
 		CustomerWO staffWO = customerService.findById(id);
 		if (staffWO == null)
 		{
-			System.out.println("Actor with id " + id + " not found");
+			System.out.println("Customer with id " + id + " not found");
 			return new ResponseEntity<CustomerWO>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<CustomerWO>(staffWO, HttpStatus.OK);
 	}
 
-	// -------------------Create a Actor----------------------------------
+	// -------------------Create a Customer----------------------------------
 
-	@RequestMapping(value = "/actor/", method = RequestMethod.POST)
-	public ResponseEntity<Void> createActor(@RequestBody CustomerWO customerWO, UriComponentsBuilder ucBuilder)
+	@RequestMapping(value = "/customer/", method = RequestMethod.POST)
+	public ResponseEntity<Void> createCustomer(@RequestBody CustomerWO customerWO, UriComponentsBuilder ucBuilder)
 	{
-		System.out.println("Creating Actor " + customerWO.getLastName());
+		System.out.println("Creating customer " + customerWO.getLastName());
 
 		customerService.saveCustomer(customerWO);
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/actor/{id}").buildAndExpand(customerWO.getCustomerId()).toUri());
+		headers.setLocation(ucBuilder.path("/customer/{id}").buildAndExpand(customerWO.getCustomerId()).toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-	@RequestMapping(value = "/actorUpdate/", method = RequestMethod.POST)
-	public ResponseEntity<CustomerWO> updateActor(@RequestBody CustomerWO customerWO, UriComponentsBuilder ucBuilder)
+	@RequestMapping(value = "/customerUpdate/", method = RequestMethod.POST)
+	public ResponseEntity<CustomerWO> updateCustomer(@RequestBody CustomerWO customerWO, UriComponentsBuilder ucBuilder)
 	{
-		log.error(String.format("Updating Actor %s ", customerWO.getCustomerId()));
+		log.error(String.format("Updating customer %s ", customerWO.getCustomerId()));
 		CustomerWO currentCustomer = customerService.findById(customerWO.getCustomerId());
 
 		if (currentCustomer == null)
 		{
-			System.out.println("Actor with id " + customerWO.getCustomerId() + " not found");
+			System.out.println("Customer with id " + customerWO.getCustomerId() + " not found");
 			return new ResponseEntity<CustomerWO>(HttpStatus.NOT_FOUND);
 		}
 
@@ -85,11 +85,11 @@ public class CustomerRestController
 		return new ResponseEntity<CustomerWO>(currentCustomer, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/actorDelete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/customerDelete/{id}", method = RequestMethod.GET)
 	public ResponseEntity<CustomerWO> deleteCustomer(@PathVariable("id") int id)
 	{
 
-		System.out.println("Fetching & Deleting Actor with id " + id);
+		System.out.println("Fetching & Deleting Customer with id " + id);
 
 		CustomerWO customerWO = customerService.findById(id);
 		if (customerWO == null)

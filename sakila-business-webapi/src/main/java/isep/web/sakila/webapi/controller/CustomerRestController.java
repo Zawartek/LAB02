@@ -80,6 +80,10 @@ public class CustomerRestController
 
 		currentCustomer.setLastName(customerWO.getLastName());
 		currentCustomer.setFirstName(customerWO.getFirstName());
+		currentCustomer.setEmail(customerWO.getEmail());
+		currentCustomer.setAddress(customerWO.getAddress());
+		//currentCustomer.setStore(customerWO.getStore());
+
 		customerService.updateCustomer(currentCustomer);
 
 		return new ResponseEntity<CustomerWO>(currentCustomer, HttpStatus.OK);

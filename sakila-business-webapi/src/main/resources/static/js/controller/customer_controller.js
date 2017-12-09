@@ -7,14 +7,16 @@ App.controller('CustomerController', ['$scope', 'CustomerService', function ($sc
             lastName: '',
             firstName: '',
             email: '',
-            address_id: null
+            address: '',
+            city: '',
+            country: ''
         };
         self.customers = [];
         self.fetchAllCustomers = function () {
             CustomerService.fetchAllCustomers().then(function (d) {
                 self.customers = d;
             }, function (errResponse) {
-                console.error('Error while fetching Currencies');
+                console.error('Error while fetching Customers');
             });
         };
         self.createCustomer = function (customer) {
@@ -66,8 +68,13 @@ App.controller('CustomerController', ['$scope', 'CustomerService', function ($sc
         self.reset = function () {
             self.customer = {
                 customerId: null,
+                store_id: null,
                 lastName: '',
-                firstName: ''
+                firstName: '',
+                email: '',
+                address: '',
+                city: '',
+                country: ''
             };
             $scope.myForm.$setPristine(); //reset Form
         };

@@ -2,7 +2,7 @@ package isep.web.sakila.webapi.model;
 
 import java.util.Date;
 
-import isep.web.sakila.jpa.entities.Customer;
+
 import isep.web.sakila.jpa.entities.Rental;
 
 
@@ -17,6 +17,7 @@ public class RentalWO extends WebObject {
 	protected Date rentalDate;
 	protected Date returnDate;
 	protected CustomerWO customer;
+	protected InventoryWO inventoryWO;
 	
 	public RentalWO() {
 		super();
@@ -68,12 +69,19 @@ public class RentalWO extends WebObject {
 	public void setRentalId(int rentalId) {
 		this.rentalId = rentalId;
 	}
+
+	public InventoryWO getInventoryWO() {
+		return inventoryWO;
+	}
+
+	public void setInventoryWO(InventoryWO inventoryWO) {
+		this.inventoryWO = inventoryWO;
+	}
 	
 	public String toString() {
 		return "Rental [id=" + this.rentalId + ", rentalDate=" 
 				+ this.rentalDate + ", returnDate=" 
 				+ this.returnDate + "]";
-	}
-	
+	}	
 	
 }

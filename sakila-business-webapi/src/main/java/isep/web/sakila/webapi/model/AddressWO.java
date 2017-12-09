@@ -13,7 +13,7 @@ public class AddressWO extends WebObject {
 	protected String district;
 	protected String postalCode;
 	protected String phone;
-	protected City city;
+	protected CityWO city;
 	
 	public AddressWO() {
 		super();
@@ -26,7 +26,7 @@ public class AddressWO extends WebObject {
 		this.address2 = address2;
 		this.district = district;
 		this.phone = phone;
-		this.city = city;
+		this.city = new CityWO(city);
 	}
 	
 	public AddressWO(Address address) {
@@ -36,7 +36,7 @@ public class AddressWO extends WebObject {
 		this.address2 = address.getAddress2();
 		this.district = address.getDistrict();
 		this.phone = address.getPhone();
-		this.city = address.getCity();
+		this.city = new CityWO(address.getCity());
 	}
 
 	public int getAddressId() {
@@ -87,11 +87,19 @@ public class AddressWO extends WebObject {
 		this.phone = phone;
 	}
 
-	public City getCity() {
+	public CityWO getCity() {
 		return city;
 	}
 
-	public void setCity(City city) {
+	public void setCity(CityWO city) {
 		this.city = city;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Address [id=" + this.addressId + ", address=" 
+				+ this.address + ", address2=" + this.address2 
+				+ ", district=" + this.district + ", phone="+ this.phone + "]";
 	}
 }

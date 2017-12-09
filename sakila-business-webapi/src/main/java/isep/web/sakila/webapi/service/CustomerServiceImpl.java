@@ -10,23 +10,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import isep.web.sakila.dao.repositories.AddressRepository;
 import isep.web.sakila.dao.repositories.CustomerRepository;
+import isep.web.sakila.dao.repositories.StoreRepository;
 import isep.web.sakila.jpa.entities.Customer;
+import isep.web.sakila.webapi.model.AddressWO;
 import isep.web.sakila.webapi.model.CustomerWO;
+import isep.web.sakila.webapi.model.StoreWO;
 
 @Service("customerService")
 @Transactional
 public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	@Autowired
+	private StoreRepository storeRepository;
 
 	private static final Log	log	= LogFactory.getLog(CustomerServiceImpl.class);
 
 	@Override
 	public List<CustomerWO> findAllCustomers() {
 		List<CustomerWO> customers = new LinkedList<CustomerWO>();
+		CustomerWO currentCustomer = null;
 		for (Customer customer : customerRepository.findAll()) {
-			customers.add(new CustomerWO(customer));
+			currentCustomer = new CustomerWO(customer);
+			currentCustomer.setAddress(new AddressWO(customer.getAddress()));
+			currentCustomer.setStore(new StoreWO(customer.getStore()));
+			customers.add(currentCustomer);
 			log.debug("Customer : " + customer);
 		}
 		return customers;
@@ -51,7 +63,8 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setLastName(userWO.getLastName());
 		customer.setFirstName(userWO.getFirstName());
 		customer.setEmail(userWO.getEmail());
-		customer.setAddress(userWO.getAddress());
+		customer.setAddress(addressRepository.findOne(userWO.getAddress().getAddressId()));
+		customer.setStore(storeRepository.findOne(userWO.getStore().getStoreId()));
 		customer.setCreateDate(time);
 		customer.setLastUpdate(time);
 		customerRepository.save(customer);
@@ -64,7 +77,8 @@ public class CustomerServiceImpl implements CustomerService {
 		customer.setLastName(userWO.getLastName());
 		customer.setFirstName(userWO.getFirstName());
 		customer.setEmail(userWO.getEmail());
-		customer.setAddress(userWO.getAddress());
+		customer.setAddress(addressRepository.findOne(userWO.getAddress().getAddressId()));
+		customer.setStore(storeRepository.findOne(userWO.getStore().getStoreId()));
 		customer.setCreateDate(time);
 		customer.setLastUpdate(time);
 		customerRepository.save(customer);

@@ -38,4 +38,8 @@ public class CountryWO extends WebObject {
 		this.country = country;
 	}
 
+	public String toString() {
+		return "Country [id=" + this.countryId + ", country=" 
+				+ this.country + "]";
+	}
 }

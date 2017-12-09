@@ -9,12 +9,15 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import isep.web.sakila.dao.repositories.AddressRepository;
+import isep.web.sakila.dao.repositories.CityRepository;
 import isep.web.sakila.jpa.entities.Address;
 import isep.web.sakila.webapi.model.AddressWO;
 
 public class AddressServiceImpl implements AddressService {
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private CityRepository cityRepository;
 
 	private static final Log	log	= LogFactory.getLog(AddressServiceImpl.class);
 
@@ -49,7 +52,7 @@ public class AddressServiceImpl implements AddressService {
 		address.setDistrict(addressWO.getDistrict());
 		address.setPostalCode(addressWO.getPostalCode());
 		address.setPhone(addressWO.getPhone());
-		address.setCity(addressWO.getCity());
+		address.setCity(cityRepository.findOne(addressWO.getCity().getCityId()));
 		address.setLastUpdate(time);
 		addressRepository.save(address);
 	}
@@ -63,7 +66,7 @@ public class AddressServiceImpl implements AddressService {
 		address.setDistrict(addressWO.getDistrict());
 		address.setPostalCode(addressWO.getPostalCode());
 		address.setPhone(addressWO.getPhone());
-		address.setCity(addressWO.getCity());
+		address.setCity(cityRepository.findOne(addressWO.getCity().getCityId()));
 		address.setLastUpdate(time);
 		addressRepository.save(address);
 	}

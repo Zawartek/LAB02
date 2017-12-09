@@ -1,8 +1,6 @@
 package isep.web.sakila.webapi.model;
 
-import isep.web.sakila.jpa.entities.Address;
 import isep.web.sakila.jpa.entities.Customer;
-import isep.web.sakila.jpa.entities.Store;
 
 public class CustomerWO extends WebObject {
 
@@ -12,22 +10,20 @@ public class CustomerWO extends WebObject {
 	protected String	 lastName;
 	protected String	 firstName;
 	protected String email;
-	protected Address address;
-	protected Store store;
+	protected AddressWO address;
+	protected StoreWO store;
 	
 	public CustomerWO() {
 		super();
 	}
 	
-	public CustomerWO(int customerId, String lastName, String firstName, String email, Address address, Store store)
+	public CustomerWO(int customerId, String lastName, String firstName, String email)
 	{
 		this();
 		this.customerId = customerId;
 		this.lastName = lastName;
 		this.firstName = firstName;
 		this.email = email;
-		this.address = address;
-		this.store = store;
 	}
 	
 	public CustomerWO(final Customer customer) {
@@ -36,8 +32,6 @@ public class CustomerWO extends WebObject {
 		this.lastName = customer.getLastName();
 		this.firstName = customer.getFirstName();
 		this.email = customer.getEmail();
-		this.address = customer.getAddress();
-		this.store = customer.getStore();
 	}
 	
 
@@ -74,19 +68,19 @@ public class CustomerWO extends WebObject {
 		this.email = email;
 	}
 	
-	public Address getAddress() {
+	public AddressWO getAddress() {
 		return address;
 	}
 	
-	public void setAddress(Address address) {
+	public void setAddress(AddressWO address) {
 		this.address = address;
 	}
 	
-	public Store getStore() {
+	public StoreWO getStore() {
 		return store;
 	}
 	
-	public void setStore(Store store) {
+	public void setStore(StoreWO store) {
 		this.store = store;
 	}
 	
@@ -94,7 +88,7 @@ public class CustomerWO extends WebObject {
 	public String toString()
 	{
 		return "Customer [id=" + this.customerId + ", LastNanem=" 
-				+ this.lastName + ", First=" + this.firstName 
-				+ ", Address=" + this.address + ", Store="+ this.store + "]";
+				+ this.lastName + ", First=" + this.firstName + ", email=" + this.email
+				+ ", address=" + this.address + ", store=" + this.store + "]";
 	}
 }
